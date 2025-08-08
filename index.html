@@ -1,7 +1,287 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 48-Hour Audit & Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .scale-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .scale-label:hover {
+            background-color: #f9fafb;
+        }
+        input[type="radio"]:checked + .scale-label {
+            background-color: #ecfdf5;
+            border-color: #10b981;
+        }
+        input[type="radio"] {
+            display: none;
+        }
+        .radio-button-custom {
+            flex-shrink: 0;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            border: 2px solid #d1d5db;
+            margin-top: 0.25rem;
+            display: grid;
+            place-items: center;
+        }
+        input[type="radio"]:checked + .scale-label .radio-button-custom {
+            border-color: #10b981;
+            background-color: #10b981;
+        }
+        input[type="radio"]:checked + .scale-label .radio-button-custom::after {
+            content: '';
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 9999px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">The 48-Hour Audit & Analysis</h1>
+            <p class="mt-2 text-lg text-gray-600">A two-part activity to analyze your time management habits with real data.</p>
+        </header>
+
+        <!-- Part 1: Instructions -->
+        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 border-b pb-2 mb-4">Part 1: The 48-Hour Time Audit</h2>
+            <p class="mb-4">Your first task is to become a researcher with yourself as the subject. You will track your time for two full, consecutive days. For the best insights, we recommend choosing <strong>one weekday and one weekend day</strong> (e.g., Thursday and Friday).</p>
+            
+            <h3 class="font-semibold text-lg mb-2">How to Track Your Time:</h3>
+            <ul class="list-disc list-inside mb-4 space-y-1">
+                <li>Use a simple notebook, a spreadsheet (Google Sheets/Excel), or a time-tracking app.</li>
+                <li>Log your primary activity in 30-minute intervals.</li>
+                <li><strong>Be honest and non-judgmental.</strong> The goal is accurate data, not perfection.</li>
+            </ul>
+
+            <h3 class="font-semibold text-lg mb-2">Example Log:</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                        <tr>
+                            <th scope="col" class="px-4 py-2">Time</th>
+                            <th scope="col" class="px-4 py-2">Primary Activity</th>
+                            <th scope="col" class="px-4 py-2">Category</th>
+                            <th scope="col" class="px-4 py-2">Notes / Feelings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b">
+                            <td class="px-4 py-2">9:00-9:30 AM</td>
+                            <td class="px-4 py-2">Started reading for Psych 101</td>
+                            <td class="px-4 py-2">Academics / Studying</td>
+                            <td class="px-4 py-2">Focused</td>
+                        </tr>
+                        <tr class="bg-gray-50 border-b">
+                            <td class="px-4 py-2">9:30-10:00 AM</td>
+                            <td class="px-4 py-2">Got distracted by texts, scrolled Instagram</td>
+                            <td class="px-4 py-2">Personal / Scrolling</td>
+                            <td class="px-4 py-2">Lost focus, felt anxious</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+             <p class="mt-4 text-sm text-gray-600"><strong>Categories:</strong> Academics (Studying/Class), Work, Errands, Chores, Self-Care, Socializing, Personal/Scrolling, Sleep, etc.</p>
+        </div>
+
+        <!-- Part 2: Analysis Tool -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold text-gray-900 border-b pb-2 mb-4">Part 2: The Time Audit Analysis Tool</h2>
+            <p class="mb-6">Once your 48-hour audit is complete, use the tool below to analyze your data. For each statement, review your time log and rate yourself based on the <strong>evidence</strong> you recorded.</p>
+
+            <form id="analysis-form" class="space-y-8">
+                <!-- Question 1 -->
+                <div class="question-block">
+                    <fieldset>
+                        <legend class="text-lg font-semibold text-gray-900 mb-2">1. Planning & Goals</legend>
+                        <p class="mb-4 text-gray-600">Look at your log. How much of your academic or work time was planned in advance (e.g., "study for bio exam") vs. decided on the spot?</p>
+                        <div class="space-y-3">
+                            <label><input type="radio" name="q1" value="1"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>1:</strong> No plan evident; my actions were almost all reactive.</span></span></label>
+                            <label><input type="radio" name="q1" value="3"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>3:</strong> Some planning; I had a few goals but was often sidetracked.</span></span></label>
+                            <label><input type="radio" name="q1" value="5"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>5:</strong> Highly planned; my log clearly shows I followed a pre-set schedule for my important tasks.</span></span></label>
+                        </div>
+                    </fieldset>
+                </div>
+                
+                <!-- Question 2 -->
+                <div class="question-block">
+                    <fieldset>
+                        <legend class="text-lg font-semibold text-gray-900 mb-2">2. Managing Interruptions</legend>
+                        <p class="mb-4 text-gray-600">Review your study/work blocks. How often were you distracted by things like notifications, social media, or other people?</p>
+                        <div class="space-y-3">
+                            <label><input type="radio" name="q2" value="1"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>1:</strong> Constant interruptions; my log shows I rarely had more than 15 minutes of focus.</span></span></label>
+                            <label><input type="radio" name="q2" value="3"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>3:</strong> Sometimes interrupted; I had some focused blocks, but also many distractions.</span></span></label>
+                            <label><input type="radio" name="q2" value="5"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>5:</strong> Deep focus; my log shows I successfully created long, uninterrupted blocks for my work.</span></span></label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-block">
+                     <fieldset>
+                        <legend class="text-lg font-semibold text-gray-900 mb-2">3. Prioritizing Tasks</legend>
+                        <p class="mb-4 text-gray-600">Did your time log show that you completed high-priority tasks (like studying for a test tomorrow) *before* low-priority tasks (like reorganizing your desk)?</p>
+                        <div class="space-y-3">
+                            <label><input type="radio" name="q3" value="1"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>1:</strong> No evidence of prioritizing; I mostly did what felt easiest first.</span></span></label>
+                            <label><input type="radio" name="q3" value="3"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>3:</strong> Some prioritizing; I did a mix of easy and important tasks.</span></span></label>
+                            <label><input type="radio" name="q3" value="5"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>5:</strong> Clear evidence of prioritizing; I consistently tackled my most important tasks first.</span></span></label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-block">
+                     <fieldset>
+                        <legend class="text-lg font-semibold text-gray-900 mb-2">4. "In-Between" Time</legend>
+                        <p class="mb-4 text-gray-600">Find any "in-between" time in your log (e.g., waiting for class, commuting, waiting in line). How did you use it?</p>
+                        <div class="space-y-3">
+                            <label><input type="radio" name="q4" value="1"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>1:</strong> All scrolling/unplanned; I did not use this time for any tasks.</span></span></label>
+                            <label><input type="radio" name="q4" value="3"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>3:</strong> A mix; I sometimes reviewed notes or answered emails, but mostly scrolled.</span></span></label>
+                            <label><input type="radio" name="q4" value="5"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>5:</strong> All purposeful; my log shows I consistently used this time for small, productive tasks.</span></span></label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-block">
+                     <fieldset>
+                        <legend class="text-lg font-semibold text-gray-900 mb-2">5. Combating Procrastination</legend>
+                        <p class="mb-4 text-gray-600">Identify a task you were dreading. Does your log show that you tackled it head-on, or that you filled your time with other, less important activities to avoid it?</p>
+                        <div class="space-y-3">
+                            <label><input type="radio" name="q5" value="1"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>1:</strong> Clear avoidance; my log shows I did many other things to put it off.</span></span></label>
+                            <label><input type="radio" name="q5" value="3"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>3:</strong> Delayed start; I eventually got to it, but only after procrastinating for a while.</span></span></label>
+                            <label><input type="radio" name="q5" value="5"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>5:</strong> Tackled it directly; my log shows I started the difficult task promptly.</span></span></label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-block">
+                     <fieldset>
+                        <legend class="text-lg font-semibold text-gray-900 mb-2">6. Balancing Life</legend>
+                        <p class="mb-4 text-gray-600">Look at the overall distribution of your time across categories (Academics, Work, Social, Self-Care, Sleep). How balanced does it appear to be?</p>
+                        <div class="space-y-3">
+                            <label><input type="radio" name="q6" value="1"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>1:</strong> Very unbalanced; one category dominated everything else.</span></span></label>
+                            <label><input type="radio" name="q6" value="3"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>3:</strong> Somewhat balanced; I made time for a few different areas of my life.</span></span></label>
+                            <label><input type="radio" name="q6" value="5"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>5:</strong> Very balanced; my log shows I made intentional time for academics, personal well-being, and sleep.</span></span></label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question-block">
+                     <fieldset>
+                        <legend class="text-lg font-semibold text-gray-900 mb-2">7. Energy Management</legend>
+                        <p class="mb-4 text-gray-600">Look at your notes/feelings column. Does your log show you did high-focus tasks during your most energetic times of day, or did you try to study when you felt tired?</p>
+                        <div class="space-y-3">
+                            <label><input type="radio" name="q7" value="1"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>1:</strong> Mismatched; my log shows I tried to do my hardest work when my energy was lowest.</span></span></label>
+                            <label><input type="radio" name="q7" value="3"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>3:</strong> Inconsistent; sometimes I matched my energy to my tasks, sometimes I didn't.</span></span></label>
+                            <label><input type="radio" name="q7" value="5"><span class="scale-label"><span class="radio-button-custom"></span><span><strong>5:</strong> Well-matched; my log shows I protected my high-energy times for my most important work.</span></span></label>
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+
+            <!-- Score Button and Results -->
+            <div class="mt-8 text-center">
+                <button id="calculate-score" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors text-lg">Analyze My Habits</button>
+            </div>
+
+            <div id="results-section" class="mt-8 p-6 bg-blue-50 border-2 border-blue-200 rounded-lg text-center" style="display: none;">
+                <h3 class="text-2xl font-bold text-blue-900">Your Analysis Score</h3>
+                <p id="score-display" class="text-5xl font-bold text-blue-700 my-4"></p>
+                <p id="score-interpretation" class="text-blue-800 max-w-2xl mx-auto"></p>
+            </div>
+        </div>
+        
+        <!-- Part 3: Reflection -->
+        <div class="bg-white p-6 rounded-lg shadow-md mt-8">
+            <h2 class="text-2xl font-bold text-gray-900 border-b pb-2 mb-4">Final Reflection</h2>
+            <p class="mb-6">Based on your audit and analysis, answer the following questions to create an action plan.</p>
+            <div class="space-y-6">
+                <div>
+                    <label for="reflection1" class="block text-lg font-semibold text-gray-900 mb-2">1. The Biggest Surprise</label>
+                    <p class="text-gray-600 mb-2">What was the single most surprising discovery from your 48-hour time audit?</p>
+                    <textarea id="reflection1" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+                <div>
+                    <label for="reflection2" class="block text-lg font-semibold text-gray-900 mb-2">2. Evidence of Strength</label>
+                    <p class="text-gray-600 mb-2">Based on your analysis, what is your biggest time management strength? How can you use this strength to your advantage this semester?</p>
+                    <textarea id="reflection2" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+                <div>
+                    <label for="reflection3" class="block text-lg font-semibold text-gray-900 mb-2">3. Opportunity for Growth</label>
+                    <p class="text-gray-600 mb-2">Based on your analysis, what is the #1 habit you want to improve? What is one specific, actionable strategy you can implement *this week* to start working on it?</p>
+                    <textarea id="reflection3" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:ring-blue-500"></textarea>
+                </div>
+            </div>
+             <div class="mt-8 text-center">
+                <button onclick="window.print()" class="bg-gray-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-gray-700 transition-colors">Print / Save as PDF</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('calculate-score').addEventListener('click', function() {
+            const form = document.getElementById('analysis-form');
+            const resultsSection = document.getElementById('results-section');
+            const scoreDisplay = document.getElementById('score-display');
+            const scoreInterpretation = document.getElementById('score-interpretation');
+            
+            let totalScore = 0;
+            let questionsAnswered = 0;
+            const totalQuestions = 7;
+
+            // Loop through each question block to calculate score
+            for (let i = 1; i <= totalQuestions; i++) {
+                const radio = form.querySelector(`input[name="q${i}"]:checked`);
+                if (radio) {
+                    totalScore += parseInt(radio.value);
+                    questionsAnswered++;
+                }
+            }
+
+            if (questionsAnswered < totalQuestions) {
+                alert('Please answer all analysis questions before calculating your score.');
+                return;
+            }
+
+            scoreDisplay.textContent = `${totalScore} / 35`;
+
+            let interpretationText = '';
+            if (totalScore >= 28) {
+                interpretationText = 'Excellent! Your audit shows strong, intentional habits. You have a great foundation. Focus on refining your system and staying consistent.';
+            } else if (totalScore >= 18) {
+                interpretationText = 'Solid foundation! Your audit shows a mix of effective habits and areas with great potential for improvement. Focus on turning your areas of opportunity into strengths.';
+            } else {
+                interpretationText = 'This is a valuable starting point! Your audit has successfully identified key opportunities for growth. Building new habits starts now, and you have the data to guide you.';
+            }
+            scoreInterpretation.textContent = interpretationText;
+
+            resultsSection.style.display = 'block';
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+
 </body>
 </html>
